@@ -1,0 +1,42 @@
+push-test/
+├─ index.html
+├─ sw.js
+├─ icon.png (通知用アイコン)
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Push通知テスト</title>
+</head>
+<body>
+  <h1>Push通知テスト</h1>
+  <button id="subscribe">通知を許可する</button>
+
+  <script>
+    document.getElementById('subscribe').addEventListener('click', async () => {
+      if ('serviceWorker' in navigator) {
+        const registration = await navigator.serviceWorker.register('sw.js');
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: '公開VAPIDキーをここに'  // 後で生成
+        });
+        console.log('Push Subscription:', JSON.stringify(subscription));
+        alert('通知の許可が完了しました！');
+      } else {
+        alert('このブラウザはService Workerに対応していません。');
+      }
+    });
+  </script>
+</body>
+</html>
+
+self.addEventListener('push', function(event) {
+  const data = event.data.json();
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: 'icon.png'
+    })
+  );
+});
