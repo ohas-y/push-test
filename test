@@ -5,7 +5,7 @@
   <title>Push通知テスト</title>
 </head>
 <body>
-  <h1>Push通知テスト</h1>
+   <h1>Push通知テスト</h1>
   <button id="subscribe">通知を許可する</button>
 
   <script>
