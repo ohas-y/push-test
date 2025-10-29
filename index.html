@@ -94,6 +94,15 @@
           applicationServerKey: 'BARXhF6BM5j_pIHropz3a5EmDtvky8coOsYew0ayRwvNWeJXcf7ffO2jg4KhLezF6ii21W-P_xiC7tybB7J0CQw'
         });
 
+
+    const emailValue = document.getElementById('email').value.trim();
+
+    // ★ ここで送信データをログ出力
+    console.log("送信予定データ:", { 
+      email: emailValue, 
+      subscription: subscription 
+    });
+        
         // GASに登録
         await fetch(GAS_URL, {
           method: 'POST',
