@@ -104,11 +104,13 @@
     });
         
         // GASに登録
-        await fetch(GAS_URL, {
-          method: 'POST',
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: document.getElementById('email').value.trim(), subscription })
-        });
+await fetch(GAS_URL, {
+  method: 'POST',
+  mode: 'no-cors',  // ← ここを追加
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ email: document.getElementById('email').value.trim(), subscription })
+});
+
 
         alert('登録完了！1日3回通知が届きます');
         document.getElementById('notify').style.display = 'none';
