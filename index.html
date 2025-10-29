@@ -83,19 +83,32 @@
   });
 
     // 通知許可
-    document.getElementById('subscribe').addEventListener('click', async () => {
-      if ('serviceWorker' in navigator) {
-        const registration = await navigator.serviceWorker.register('sw.js');
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: 'BARXhF6BM5j_pIHropz3a5EmDtvky8coOsYew0ayRwvNWeJXcf7ffO2jg4KhLezF6ii21W-P_xiC7tybB7J0CQw'
-        });
-        console.log('Push Subscription:', JSON.stringify(subscription));
-        alert('通知の許可が完了しました！');
-      } else {
-        alert('このブラウザはService Workerに対応していません。');
-      }
+<!-- 通知許可 -->
+<script>
+document.getElementById('subscribe').addEventListener('click', async () => {
+  if ('serviceWorker' in navigator) {
+    const registration = await navigator.serviceWorker.register('sw.js');
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: 'BARXhF6BM5j_pIHropz3a5EmDtvky8coOsYew0ayRwvNWeJXcf7ffO2jg4KhLezF6ii21W-P_xiC7tybB7J0CQw'
     });
-  </script>
+
+    // 登録時に入力したメールを再取得
+    const email = document.getElementById('email').value.trim();
+
+    // GASにsubscriptionを送信
+    await fetch(GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, subscription })
+    });
+
+    alert('通知の許可と登録が完了しました！');
+  } else {
+    alert('このブラウザはService Workerに対応していません。');
+  }
+});
+</script>
+
 </body>
 </html>
