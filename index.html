@@ -2,13 +2,87 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Push通知テスト</title>
+  <title>体調記録システム 登録ページ</title>
 </head>
 <body>
-   <h1>Push通知テスト</h1>
-  <button id="subscribe">通知を許可する</button>
+  <h1>体調記録システム 登録</h1>
+
+  <!-- Step 1: 利用規約など -->
+  <section id="terms">
+    <h2>利用規約（簡易版）</h2>
+    <p>サービス内容</p>
+　<br>　本サービスは、利用者が毎日の体調データを記録し、管理するためのBOTサービスです。
+<p>アカウント利用</p>
+　<br>　登録されたアカウントは、利用者自身の記録管理のみに使用されます。
+　<br>　これ以外の目的（広告配信、第三者提供など）には使用しません。
+<p>禁止事項</p>
+    <br>　- 不正アクセスや他の利用者への迷惑行為
+    <br>　- 本サービスの運営を妨げる行為
+<p>免責事項</p>
+    <br>　本サービスの利用によって生じたいかなる損害についても、当方は責任を負いません。
+    <br>　記録内容の正確性や健康上の判断は、利用者ご自身の責任で行ってください。
+<p>規約変更</p>
+<br>　本規約は必要に応じて変更される場合があります。変更後の規約は公開時点から効力を持ちます。
+    <br>
+    <br>
+<h3>プライバシーポリシー（簡易版）</h3>
+<p>収集する情報</p>
+　<br>　　- 利用者が入力した体調や気分の記録
+　<br>　　- アカウント情報（メールアドレス等）
+<p>利用目的</p>
+　<br>　収集した情報は、利用者自身の体調管理をサポートする目的でのみ使用します。
+<p>第三者提供</p>
+　<br>　収集した情報は、法令に基づく場合を除き、第三者に提供することはありません。
+<p>情報管理</p>
+　<br>　個人情報および記録データは、安全に管理します。
+<p>利用者の権利</p>
+　<br>　利用者は、自身の登録情報の確認・修正・削除をいつでも行うことができます。
+    </p>
+  </section>
+
+  <!-- Step 2: メール登録フォーム -->
+  <section id="register">
+    <h2>メールアドレス登録</h2>
+    <input type="email" id="email" placeholder="メールアドレスを入力" required>
+    <button id="registerButton">登録する</button>
+  </section>
+
+  <!-- Step 3: 通知許可（登録完了後に表示） -->
+  <section id="notify" style="display:none;">
+    <h2>Push通知設定</h2>
+    <p>続いて通知を許可してください。</p>
+    <button id="subscribe">通知を許可する</button>
+  </section>
 
   <script>
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbxISCZ1xl2sUpvTRbd8yN0XT25anxO9SaGUsoD7Dd7Z5fR72UXxDunD-zCavZDz8wJarw/exec"; // ③でコピーしたURL
+
+  document.getElementById('registerButton').addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    if (!email) {
+      alert('メールアドレスを入力してください');
+      return;
+    }
+
+    // Google Apps Script に送信
+    try {
+      await fetch(GAS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+
+      alert('登録が完了しました！次に通知を許可してください。');
+
+      // 表示切り替え
+      document.getElementById('register').style.display = 'none';
+      document.getElementById('notify').style.display = 'block';
+    } catch (e) {
+      alert('登録に失敗しました。もう一度お試しください。');
+    }
+  });
+
+    // 通知許可
     document.getElementById('subscribe').addEventListener('click', async () => {
       if ('serviceWorker' in navigator) {
         const registration = await navigator.serviceWorker.register('sw.js');
