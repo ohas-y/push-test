@@ -68,7 +68,7 @@
   </section>
 
   <script>
-    const GAS_URL = "https://script.google.com/macros/s/AKfycby8Sq4ge2tmF8PsQJU6JAA3maYuJ1RKl3uj4oX2ilXlv7dH7Qc4zFhL0Hujr10UGMIg5w/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwEdJfuPKML2ME0tSxe9UO9W3j5ZG70MAEDKYozvQdZaMJ9mzdFBGG1uWUtJWdD3TgnrQ/exec";
 
     // 利用規約同意 → メール登録表示
     document.getElementById('agreeButton').addEventListener('click', () => {
@@ -89,7 +89,7 @@
     document.getElementById('subscribe').addEventListener('click', async () => {
       if ('serviceWorker' in navigator) {
         const registration = await navigator.serviceWorker.register('sw.js');
-console.log('SW登録完了', registration);
+        console.log('SW登録完了', registration);
         const subscription = await registration.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: 'BARXhF6BM5j_pIHropz3a5EmDtvky8coOsYew0ayRwvNWeJXcf7ffO2jg4KhLezF6ii21W-P_xiC7tybB7J0CQw'
