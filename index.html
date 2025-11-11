@@ -87,6 +87,13 @@
     document.getElementById('registerButton').addEventListener('click', async () => {
       const email = document.getElementById('email').value.trim();
       if (!email) { alert('メールを入力してください'); return; }
+ 
+      // 🔹 Gmailチェック（フロント側）
+      if (!email.endsWith("@gmail.com")) {
+        alert("Gmail以外は登録できません");
+        return;
+      }
+      
       alert('次に通知を許可してください');
       document.getElementById('register').style.display = 'none';
       document.getElementById('notify').style.display = 'block';
