@@ -59,6 +59,8 @@
  <!-- メール登録 -->
 <section id="register" style="display:none;">
   <h2>メールアドレス登録</h2>
+<br>  <p>※Gmail以外のメールアドレスは登録できません。</p> 
+  
   <input type="email" id="email" placeholder="メールアドレスを入力" required
          style="width: 100%; padding: 10px; font-size: 16px; box-sizing: border-box;">
   <button id="registerButton" style="padding: 10px 20px; font-size: 12px; margin-top: 10px;">
@@ -73,7 +75,7 @@
   </section>
 
   <script>
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyQ_XAkNR6asVHfObmJPOAJE9yNA3rupKC6PHfktglowqY5KxxHbG77ktBCtZ3gqA4uiQ/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbx0A19Kd9Qg6In_Te5rotz32D-cvJa_96kbphWHuZSgQD6i-U8ZNVseQi1eNRWfnRQagA/exec";
 
     // 利用規約同意 → メール登録表示
     document.getElementById('agreeButton').addEventListener('click', () => {
@@ -112,7 +114,7 @@
         // GASに登録
 await fetch(GAS_URL, {
   method: 'POST',
-  mode: 'no-cors',  // ← ここを追加
+  mode: 'cors',  // ← ここを追加
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ email: document.getElementById('email').value.trim(), subscription })
 });
