@@ -4,29 +4,43 @@
   <meta charset="UTF-8">
   <title>体調記録システム 登録ページ</title>
   <style>
-    /* ▼ 追加したスタイル ▼ */
-    #terms {
-      border: 1px solid #ccc;      /* 薄いグレーの枠線 */
-      background-color: #f9f9f9;   /* 背景をほんのり明るいグレーに */
-      padding: 20px;               /* 枠の内側に余白 */
-      border-radius: 8px;          /* 角を少し丸く */
-      width: 80%;                  /* ページ中央に寄せるための幅 */
-      margin: 20px auto;           /* 中央寄せ */
+    /* 共通ボックスデザイン */
+    .terms-box {
+      border: 1px solid #ccc;        /* 薄い枠線 */
+      background-color: #f9f9f9;     /* 明るいグレー背景 */
+      padding: 20px;                 /* 内側余白 */
+      border-radius: 8px;            /* 角を丸く */
+      width: 80%;                    /* 中央寄せのための幅 */
+      margin: 20px auto;             /* 上下・中央余白 */
     }
 
     h2 {
+      margin-top: 0;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    p {
+      line-height: 1.8;
+    }
+
+    #agreeButton {
+      padding: 10px 20px;
+      font-size: 14px;
       margin-top: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
 </head>
 <body>
   <h1>体調記録システム 登録</h1>
 
-<br><br>
-  <p>以下の文章をお読みいただき、同意いただけましたらメールアドレスを登録してください</p> 
-  
+  <p>以下の文章をお読みいただき、同意いただけましたらメールアドレスを登録してください。</p> 
+
   <!-- 利用規約 -->
-  <section id="terms">
+  <section class="terms-box">
     <h2>利用規約</h2>
     <p>
       第1条（サービス内容）<br>
@@ -48,8 +62,10 @@
       第5条（規約変更）<br>
       本規約は必要に応じて変更される場合があります。変更後の規約は公開時点から効力を持ちます。
     </p>
-<br><br><br><br><br><br><br><br><br>
-    
+ </section>
+
+    <!-- プライバシーポリシー -->
+  <section class="terms-box">
     <h2>プライバシーポリシー</h2>
     <p>
       第1条（収集する情報）<br>
@@ -68,7 +84,8 @@
       第5条（利用者の権利）<br>
       利用者は、自身の登録情報の確認・修正・削除をいつでも行うことができます。
     </p>
-
+  </section>
+    
     <button id="agreeButton"style="padding: 10px 20px; font-size: 12px; margin-top: 10px;">同意して登録へ</button>
   </section>
 
