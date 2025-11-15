@@ -6,57 +6,54 @@
   <style>
     /* ページ全体のグラデーション背景 */
     body {
-      background: linear-gradient(135deg, #e0f7f4, #a0dce9);
+      background: linear-gradient(135deg, #b0f0ed, #70c8dd); /* 明るめ⇔濃いめで差を強め */
       font-family: "Helvetica Neue", Arial, sans-serif;
       margin: 0;
       padding: 0;
       color: #333;
     }
 
-    /* 全体の幅制限と中央寄せ */
     .container {
       max-width: 900px;
       margin: 0 auto;
       padding: 20px;
     }
 
-    /* バナー/タイトル枠 */
-    .banner {
-      background: rgba(255,255,255,0.9);
+    /* タイトル＋説明枠 */
+    .title-box {
+      background: rgba(224, 247, 244, 0.85);
       border-radius: 12px;
       padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .banner-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 10px;
       flex-wrap: wrap;
     }
 
-    .banner-left, .banner-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .banner-title {
-      font-size: 28px;
+    .title-box h1 {
+      font-size: 32px;
       font-weight: bold;
-      margin: 0 10px;
+      margin: 10px 0;
     }
 
-    .banner-description {
+    .title-box p {
       font-size: 16px;
-      margin-top: 10px;
       line-height: 1.6;
     }
 
-    /* イラストモチーフ例（仮にアイコン画像URLを指定） */
-    .banner img {
+    .banner-icons img {
       width: 50px;
       height: 50px;
     }
 
-    /* 利用規約・プライバシーポリシー枠 */
+    /* 利用規約・プライバシーポリシー */
     .terms-box {
       border: 1px solid #ccc;
       background-color: rgba(255,255,255,0.95);
@@ -75,12 +72,19 @@
       line-height: 1.8;
     }
 
-    /* 登録入力フォーム */
-    input[type="email"] {
-      width: 100%;
+    /* メール登録フォーム */
+    #register {
+      display: none;
+      text-align: center;
+      background: rgba(255,255,255,0.95);
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    #register input[type="email"] {
+      width: 80%;
       padding: 10px;
       font-size: 16px;
-      box-sizing: border-box;
       margin-bottom: 10px;
       border-radius: 6px;
       border: 1px solid #aaa;
@@ -103,22 +107,21 @@
 </head>
 <body>
   <div class="container">
-    <!-- バナー -->
-    <div class="banner">
-      <div class="banner-left">
+
+    <!-- タイトル＋説明枠 -->
+    <div class="title-box">
+      <div class="banner-icons">
         <img src="https://img.icons8.com/ios/50/000000/line-chart.png" alt="折れ線グラフ">
         <img src="https://img.icons8.com/ios/50/000000/thermometer.png" alt="体温計">
-        <div class="banner-title">体調管理BOT</div>
-      </div>
-      <div class="banner-right">
         <img src="https://img.icons8.com/ios/50/000000/running.png" alt="運動">
         <img src="https://img.icons8.com/ios/50/000000/clock.png" alt="時計">
       </div>
-    </div>
-    <div class="banner-description">
-      Gmailアドレスを登録することで、毎日8時・12時・20時にあなたの体調や気分を10段階で記録できます。<br>
-      また、毎月1日に前月の記録をグラフで確認することで自身を振り返る機会としてご利用できるシステムです。<br>
-      あなたの健康促進にお役立てください。
+      <h1>体調管理BOT</h1>
+      <p>
+        Gmailアドレスを登録することで、毎日8時・12時・20時にあなたの体調や気分を10段階で記録できます。<br>
+        また、毎月1日に前月の記録をグラフで確認することで自身を振り返る機会としてご利用できるシステムです。<br>
+        あなたの健康促進にお役立てください。
+      </p>
     </div>
 
     <!-- 利用規約 -->
@@ -127,23 +130,19 @@
       <p>
         第1条（サービス内容）<br>
         本サービスは、利用者が毎日の体調データを記録し、管理するためのBOTサービスです。<br><br>
-
         第2条（アカウント利用）<br>
         登録されたアカウントは、利用者自身の記録管理のみに使用します。
         これ以外の目的（広告配信、第三者提供など）には使用しません。<br><br>
-
         第3条（禁止事項）<br>
-        以下の行為を禁止します。<br>
         - 不正アクセスや他の利用者への迷惑行為<br>
         - 本サービスの運営を妨げる行為<br><br>
-
         第4条（免責事項）<br>
         本サービスの利用によって生じたいかなる損害についても、当方は責任を負いません。
         記録内容の正確性や健康上の判断は、利用者ご自身の責任で行ってください。<br><br>
-
         第5条（規約変更）<br>
         本規約は必要に応じて変更される場合があります。変更後の規約は公開時点から効力を持ちます。
       </p>
+      <button id="agreeButton">同意する</button>
     </section>
 
     <!-- プライバシーポリシー -->
@@ -153,33 +152,37 @@
         第1条（収集する情報）<br>
         - 利用者が入力した体調や気分の記録<br>
         - アカウント情報（メールアドレス等）<br><br>
-
         第2条（利用目的）<br>
         収集した情報は、利用者自身の体調管理をサポートする目的でのみ使用します。<br><br>
-
         第3条（第三者提供）<br>
         収集した情報は、法令に基づく場合を除き、第三者に提供することはありません。<br><br>
-
         第4条（情報管理）<br>
         個人情報および記録データは、安全に管理します。<br><br>
-
         第5条（利用者の権利）<br>
         利用者は、自身の登録情報の確認・修正・削除をいつでも行うことができます。
       </p>
     </section>
 
-    <!-- メール登録 -->
+    <!-- メール登録フォーム（シンプル） -->
     <section id="register">
-      <h2>メールアドレス登録</h2>
-      <p>※Gmail以外のメールアドレスは登録できません。</p> 
+      <p>メールアドレスを登録してください</p>
       <input type="email" id="email" placeholder="メールアドレスを入力" required>
+      <br>
       <button id="registerButton">登録する</button>
     </section>
+
   </div>
 
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbwoW4r6fgR9rr0sNBBU12Lk4giULB-OqrdUqDzI91SKCMAOx9nFTDFeZRFGLhTD90sI/exec";
 
+    // 規約同意 → メール登録フォーム表示
+    document.getElementById('agreeButton').addEventListener('click', () => {
+      document.getElementById('agreeButton').style.display = 'none';
+      document.getElementById('register').style.display = 'block';
+    });
+
+    // メール登録
     document.getElementById('registerButton').addEventListener('click', async () => {
       const email = document.getElementById('email').value.trim();
       if (!email) { alert('メールを入力してください'); return; }
