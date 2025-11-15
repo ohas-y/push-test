@@ -1,93 +1,162 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>体調記録システム 登録ページ</title>
-  <style>
-    /* 共通ボックスデザイン */
-    .terms-box {
-      border: 1px solid #ccc;
-      background-color: #f9f9f9;
-      padding: 20px;
-      border-radius: 8px;
-      width: 80%;
-      margin: 20px auto;
-    }
+<meta charset="UTF-8">
+<title>体調管理BOT 登録ページ</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #a0e9e0, #d1f0f8); /* 薄い青緑グラデ */
+    color: #333;
+  }
 
-    h2 {
-      margin-top: 0;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 5px;
-    }
+  .container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-    p {
-      line-height: 1.8;
-    }
+  /* トップバナー */
+  .banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: rgba(255,255,255,0.8);
+    border-radius: 12px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+  }
 
-    #agreeButton, #registerButton {
-      padding: 10px 20px;
-      font-size: 14px;
-      margin-top: 20px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  </style>
+  .banner h1 {
+    font-size: 2.2em;
+    margin: 0 20px 20px 20px;
+    color: #00796b;
+    flex: 1 1 100%;
+  }
+
+  .banner-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex: 1 1 100%;
+    margin-bottom: 20px;
+  }
+
+  .banner-icons img {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* BOT説明 */
+  .description {
+    background: rgba(255,255,255,0.9);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 1em;
+  }
+
+  /* 利用規約・プライバシー */
+  .terms-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .terms-box h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #00796b;
+  }
+
+  .terms-box p {
+    line-height: 1.6;
+    font-size: 0.95em;
+  }
+
+  /* 登録ボタン */
+  #agreeButton {
+    display: block;
+    padding: 12px 25px;
+    margin: 0 auto 40px auto;
+    font-size: 16px;
+    border: none;
+    background-color: #00796b;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  #agreeButton:hover {
+    background-color: #004d40;
+  }
+
+</style>
 </head>
 <body>
-  <h1>体調記録システム 登録</h1>
+<div class="container">
 
-  <p>以下の文章をお読みいただき、同意いただけましたらメールアドレスを登録してください。</p> 
+  <div class="banner">
+    <h1>体調管理BOT</h1>
+    <div class="banner-icons">
+      <img src="https://img.icons8.com/fluency/48/000000/combo-chart.png" alt="グラフ">
+      <img src="https://img.icons8.com/fluency/48/000000/thermometer.png" alt="体温計">
+      <img src="https://img.icons8.com/fluency/48/000000/running.png" alt="運動">
+      <img src="https://img.icons8.com/fluency/48/000000/clock.png" alt="時間">
+    </div>
+  </div>
 
-  <!-- 利用規約 -->
+  <div class="description">
+    Gmailアドレスを登録することで、毎日8時・12時・20時にあなたの体調や気分を10段階で記録できます。<br>
+    また、毎月1日に前月の記録をグラフで確認することで自身を振り返る機会としてご利用できるシステムです。<br>
+    あなたの健康促進にお役立てください。
+  </div>
+
   <section class="terms-box">
     <h2>利用規約</h2>
     <p>
       第1条（サービス内容）<br>
       本サービスは、利用者が毎日の体調データを記録し、管理するためのBOTサービスです。<br><br>
-
       第2条（アカウント利用）<br>
-      登録されたアカウントは、利用者自身の記録管理のみに使用します。
-      これ以外の目的（広告配信、第三者提供など）には使用しません。<br><br>
-
+      登録されたアカウントは、利用者自身の記録管理のみに使用します。これ以外の目的には使用しません。<br><br>
       第3条（禁止事項）<br>
-      以下の行為を禁止します。<br>
-      - 不正アクセスや他の利用者への迷惑行為<br>
-      - 本サービスの運営を妨げる行為<br><br>
-
+      不正アクセスや迷惑行為、本サービス運営妨害は禁止します。<br><br>
       第4条（免責事項）<br>
-      本サービスの利用によって生じたいかなる損害についても、当方は責任を負いません。
-      記録内容の正確性や健康上の判断は、利用者ご自身の責任で行ってください。<br><br>
-
+      本サービスの利用によって生じたいかなる損害についても、当方は責任を負いません。<br><br>
       第5条（規約変更）<br>
-      本規約は必要に応じて変更される場合があります。変更後の規約は公開時点から効力を持ちます。
+      本規約は必要に応じて変更される場合があります。
     </p>
- </section>
+  </section>
 
-    <!-- プライバシーポリシー -->
   <section class="terms-box">
     <h2>プライバシーポリシー</h2>
     <p>
       第1条（収集する情報）<br>
-      - 利用者が入力した体調や気分の記録<br>
-      - アカウント情報（メールアドレス等）<br><br>
-
+      利用者が入力した体調や気分の記録、アカウント情報（メールアドレス等）<br><br>
       第2条（利用目的）<br>
-      収集した情報は、利用者自身の体調管理をサポートする目的でのみ使用します。<br><br>
-
+      利用者自身の体調管理をサポートする目的でのみ使用します。<br><br>
       第3条（第三者提供）<br>
-      収集した情報は、法令に基づく場合を除き、第三者に提供することはありません。<br><br>
-
+      法令に基づく場合を除き、第三者に提供しません。<br><br>
       第4条（情報管理）<br>
       個人情報および記録データは、安全に管理します。<br><br>
-
       第5条（利用者の権利）<br>
-      利用者は、自身の登録情報の確認・修正・削除をいつでも行うことができます。
+      登録情報の確認・修正・削除はいつでも可能です。
     </p>
   </section>
-    
-    <button id="agreeButton">同意して登録へ</button>
 
+  <button id="agreeButton">同意してメール登録へ進む</button>
+  
  <!-- メール登録 -->
 <section id="register" style="display:none;">
   <h2>メールアドレス登録</h2>
