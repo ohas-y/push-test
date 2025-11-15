@@ -6,12 +6,12 @@
   <style>
     /* 共通ボックスデザイン */
     .terms-box {
-      border: 1px solid #ccc;        /* 薄い枠線 */
-      background-color: #f9f9f9;     /* 明るいグレー背景 */
-      padding: 20px;                 /* 内側余白 */
-      border-radius: 8px;            /* 角を丸く */
-      width: 80%;                    /* 中央寄せのための幅 */
-      margin: 20px auto;             /* 上下・中央余白 */
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      margin: 20px auto;
     }
 
     h2 {
@@ -24,7 +24,7 @@
       line-height: 1.8;
     }
 
-    #agreeButton {
+    #agreeButton, #registerButton {
       padding: 10px 20px;
       font-size: 14px;
       margin-top: 20px;
@@ -86,86 +86,56 @@
     </p>
   </section>
     
-    <button id="agreeButton"style="padding: 10px 20px; font-size: 12px; margin-top: 10px;">同意して登録へ</button>
-
+    <button id="agreeButton">同意して登録へ</button>
 
  <!-- メール登録 -->
 <section id="register" style="display:none;">
   <h2>メールアドレス登録</h2>
-<br>  <p>※Gmail以外のメールアドレスは登録できません。</p> 
-  
+  <p>※Gmail以外のメールアドレスは登録できません。</p> 
   <input type="email" id="email" placeholder="メールアドレスを入力" required
          style="width: 100%; padding: 10px; font-size: 16px; box-sizing: border-box;">
-  <button id="registerButton" style="padding: 10px 20px; font-size: 12px; margin-top: 10px;">
-    登録する
-  </button>
+  <button id="registerButton">登録する</button>
 </section>
 
-  <!-- 通知許可 -->
-  <section id="notify" style="display:none;">
-    <h2>Push通知設定</h2>
-    <button id="subscribe">通知を許可する</button>
-  </section>
-
   <script>
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbzfkfOmnmh2_MCo7b89vmW-iYMQvA1JUdLUzMvTiPzbCz68768tcZI3CrkYaWAPVEDhSA/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwoW4r6fgR9rr0sNBBU12Lk4giULB-OqrdUqDzI91SKCMAOx9nFTDFeZRFGLhTD90sI/exec";
 
     // 利用規約同意 → メール登録表示
     document.getElementById('agreeButton').addEventListener('click', () => {
-     document.querySelectorAll('.terms-box').forEach(box => box.style.display = 'none');
-    document.getElementById('agreeButton').style.display = 'none'; // ボタンも隠す
-    document.getElementById('register').style.display = 'block';
-  });
-
+      document.querySelectorAll('.terms-box').forEach(box => box.style.display = 'none');
+      document.getElementById('agreeButton').style.display = 'none';
+      document.getElementById('register').style.display = 'block';
+    });
 
     // メール登録
     document.getElementById('registerButton').addEventListener('click', async () => {
       const email = document.getElementById('email').value.trim();
       if (!email) { alert('メールを入力してください'); return; }
  
-      // 🔹 Gmailチェック（フロント側）
+      // Gmailチェック（フロント側）
       if (!email.endsWith("@gmail.com")) {
         alert("Gmail以外は登録できません");
         return;
       }
-      
-      alert('次に通知を許可してください');
-      document.getElementById('register').style.display = 'none';
-      document.getElementById('notify').style.display = 'block';
-    });
 
-    // 通知許可
-    document.getElementById('subscribe').addEventListener('click', async () => {
-      if ('serviceWorker' in navigator) {
-        const registration = await navigator.serviceWorker.register('sw.js');
-        console.log('SW登録完了', registration);
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: 'BARXhF6BM5j_pIHropz3a5EmDtvky8coOsYew0ayRwvNWeJXcf7ffO2jg4KhLezF6ii21W-P_xiC7tybB7J0CQw'
+      // GASに登録
+      try {
+        const response = await fetch(GAS_URL, {
+          method: 'POST',
+          mode: 'cors',
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
         });
 
-
-    const emailValue = document.getElementById('email').value.trim();
-
-    // ★ ここで送信データをログ出力
-    console.log("送信予定データ:", { 
-      email: emailValue, 
-      subscription: subscription 
-    });
-        
-        // GASに登録
-await fetch(GAS_URL, {
-  method: 'POST',
-  mode: 'cors',  // ← ここを追加
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ email: document.getElementById('email').value.trim(), subscription })
-});
-
-
-        alert('登録完了！1日3回通知が届きます');
-        document.getElementById('notify').style.display = 'none';
-      } else {
-        alert('このブラウザはService Workerに対応していません。');
+        const result = await response.json();
+        if (result.result === "success") {
+          alert('登録完了！1日3回メールが届きます');
+          document.getElementById('register').style.display = 'none';
+        } else {
+          alert('登録エラー: ' + result.message);
+        }
+      } catch (e) {
+        alert('通信エラー: ' + e.message);
       }
     });
   </script>
