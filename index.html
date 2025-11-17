@@ -21,7 +21,7 @@
 
     /* タイトル＋説明枠 */
     .title-box {
-      background: rgba(220, 244, 241, 0.8); /* 透明度0.8 */
+      background: rgba(240, 244, 241, 0.8); /* 透明度0.8 */
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 20px;
@@ -60,13 +60,14 @@
       font-size: 16px;
       line-height: 1.6;
       margin: 0;
-      text-align: center;
+        text-align: justify;
+  text-align-last: justify;
     }
 
     /* 利用規約・プライバシーポリシー */
     .terms-box {
       border: 1px solid #ccc;
-      background-color: rgba(237, 251, 242, 0.8); /* 透明度0.8 */
+      background-color: rgba(244, 251, 250, 0.8); /* 透明度0.8 */
       padding: 20px;
       border-radius: 8px;
       margin-bottom: 20px;
@@ -154,16 +155,16 @@
       <h2>利用規約</h2>
       <p>
         第1条（サービス内容）<br>
-        本サービスは、利用者が毎日の体調データを記録し、管理するためのBOTサービスです。<br><br>
+        　本サービスは、利用者が毎日の体調データを記録し、管理するためのBOTサービスです。<br><br>
         第2条（アカウント利用）<br>
-        登録されたアカウントは、利用者自身の記録管理のみに使用します。<br><br>
+        　登録されたアカウントは、利用者自身の記録管理のみに使用します。<br><br>
         第3条（禁止事項）<br>
-        - 不正アクセスや他者への迷惑行為<br>
-        - 本サービスの運営を妨げる行為<br><br>
+        　- 不正アクセスや他者への迷惑行為<br>
+        　- 本サービスの運営を妨げる行為<br><br>
         第4条（免責事項）<br>
-        本サービス利用による損害について、当方は責任を負いません。<br><br>
+        　本サービス利用による損害について、当方は責任を負いません。<br><br>
         第5条（規約変更）<br>
-        規約は必要に応じて改定される場合があります。
+        　規約は必要に応じて改定される場合があります。
       </p>
     </section>
 
@@ -172,16 +173,16 @@
       <h2>プライバシーポリシー</h2>
       <p>
         第1条（収集する情報）<br>
-        - 入力された体調記録<br>
-        - メールアドレス<br><br>
+       　 - 入力された体調記録<br>
+        　- メールアドレス<br><br>
         第2条（利用目的）<br>
-        収集した情報は、体調管理サポートの目的のみに使用します。<br><br>
+        　収集した情報は、体調管理サポートの目的のみに使用します。<br><br>
         第3条（第三者提供）<br>
-        法令に基づく場合を除き、第三者に提供しません。<br><br>
+        　法令に基づく場合を除き、第三者に提供しません。<br><br>
         第4条（情報管理）<br>
-        個人情報は安全に管理します。<br><br>
+        　個人情報は安全に管理します。<br><br>
         第5条（利用者の権利）<br>
-        自身の登録情報は確認・修正・削除ができます。
+        　自身の登録情報は確認・修正・削除ができます。
       </p>
     </section>
 
@@ -201,9 +202,22 @@
     const GAS_URL = "https://script.google.com/macros/s/AKfycbwoW4r6fgR9rr0sNBBU12Lk4giULB-OqrdUqDzI91SKCMAOx9nFTDFeZRFGLhTD90sI/exec";
 
     document.getElementById('agreeButton').addEventListener('click', () => {
-      document.getElementById('agreeButton').style.display = 'none';
-      document.getElementById('register').style.display = 'block';
-    });
+
+  // タイトル & 説明文 を消す
+  document.querySelector('.title-box').style.display = 'none';
+
+  // 利用規約・プライバシーポリシー
+  document.querySelectorAll('.terms-box').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  // 同意ボタンを消す
+  document.getElementById('agreeButton').style.display = 'none';
+
+  // メール登録フォームを表示
+  document.getElementById('register').style.display = 'block';
+});
+
 
     document.getElementById('registerButton').addEventListener('click', async () => {
       const email = document.getElementById('email').value.trim();
