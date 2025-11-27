@@ -227,7 +227,8 @@
         const res = await fetch(GAS_URL, {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({  email: email,
+        subscription: "web-push無し"  })
         });
         const data = await res.json();
         if(data.result === "success") {
